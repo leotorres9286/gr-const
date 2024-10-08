@@ -1,0 +1,16 @@
+.product-badge {
+  &.status-init {
+    background: #C8E6C9;
+    color: #256029;
+  }
+
+  &.status-recived {
+    background: #FFCDD2;
+    color: #C63737;
+  }
+
+  &.status-processed {
+    background: #FEEDAF;
+    color: #8A5340;
+  }
+}

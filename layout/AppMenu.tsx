@@ -178,7 +178,16 @@ const AppMenu = () => {
         {
             label: 'Operaciones',
             items: [
-                { label: 'Combustibles', icon: 'gas-pump', typeIcon: 'fa', to: '/combustibles' },
+                { label: 'Solicitar Combustibles', icon: 'gas-pump', typeIcon: 'fa', to: '/solicitar-combustibles' },
+                { label: 'Solicitar Suministros', icon: 'screwdriver-wrench', typeIcon: 'fa', to: '/solicitar-suministros' },
+            ]
+        },
+        { label: 'Sep-1', seperator: true },
+        {
+            label: 'Recursos',
+            items: [
+                { label: 'Lista de Equipos', icon: 'truck-pickup', typeIcon: 'fa', to: '/equipos' },
+                { label: 'Lista de Suministros', icon: 'dolly', typeIcon: 'fa', to: '/suministros' },
             ]
         },
     ];
@@ -187,7 +196,7 @@ const AppMenu = () => {
         <MenuProvider>
             <ul className="layout-menu">
                 {model.map((item, i) => {
-                    return !item?.seperator ? <AppMenuitem item={item} root={true} index={i} key={item.label} /> : <li className="menu-separator"></li>;
+                    return !item?.seperator ? <AppMenuitem item={item} root={true} index={i} key={item.label} /> : <li key={i} className="menu-separator"></li>;
                 })}
             </ul>
         </MenuProvider>

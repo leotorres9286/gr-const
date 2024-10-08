@@ -10,3 +10,7 @@
 .layout-main {
     flex: 1 1 auto;
 }
+
+.contain-card-full-h {
+    height: calc(100vh - 9rem);
+}

@@ -1,0 +1,40 @@
+.item-badge {
+  border-radius: var(--border-radius);
+  padding: .25em .5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: .3px;
+}
+
+.item-badge {
+  &.status-init {
+    background: #FFCDD2;
+    color: #C63737;
+  }
+
+  &.status-recived {
+    background: #FEEDAF;
+    color: #8A5340;
+  }
+
+  &.status-processed {
+    background: #C8E6C9;
+    color: #256029;
+  }
+
+  &.tank-level-low {
+    background: #FFCDD2;
+    color: #C63737;
+  }
+  
+  &.tank-level-middle {
+    background: #FEEDAF;
+    color: #8A5340;
+  }
+  
+  &.tank-level-full {
+    background: #C8E6C9;
+    color: #256029;
+  }
+}

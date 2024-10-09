@@ -5,3 +5,5 @@ export const CONFIG_LOCALE_DATE = {
   month: '2-digit',
   year: 'numeric'
 };
+
+export const FORMAT_DATE_STRING = 'dd/mm/yyyy';

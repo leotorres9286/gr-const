@@ -1,4 +1,4 @@
-export type EquipmentStatus = 'En servicio' | 'Fuera de servicio';
+export type StatusEquipment = 'En servicio' | 'Fuera de servicio';
 
 export interface Equipment {
   id: string;
@@ -7,5 +7,5 @@ export interface Equipment {
   hourMeter: number;
   odoMeter: number;
   registerAt: Date;
-  status: EquipmentStatus;
+  status: StatusEquipment;
 }

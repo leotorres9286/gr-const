@@ -8,6 +8,15 @@
             "odoMeter": 200,
             "registerAt": "2024-07-13",
             "status": "En servicio"
+        },
+        {
+            "id": "002",
+            "name": "Escabadora",
+            "economicNumber": "000025",
+            "hourMeter": 100,
+            "odoMeter": 200,
+            "registerAt": "2024-07-13",
+            "status": "Fuera de servicio"
         }
     ]
 }

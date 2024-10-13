@@ -6,7 +6,7 @@ import { Calendar } from 'primereact/calendar';
 import { Column, ColumnFilterElementTemplateOptions } from 'primereact/column';
 import { DataTable, DataTableFilterMeta } from 'primereact/datatable';
 import { Dropdown } from 'primereact/dropdown';
-import { Equipment, StatusEquipment } from '@/types/equipment';
+import { IEquipment, StatusEquipment } from '@/types/equipment';
 import { useRouter } from 'next/navigation';
 import { EquipmentService } from '@/core/service/EquipmentService';
 import { StatusEquipmetEnum } from '@/core/enum/equipment.enum';
@@ -14,7 +14,7 @@ import { CONFIG_LOCALE_DATE, FORMAT_DATE_STRING, LOCALE } from '@/utils/constant
 import { STATUS_EQUIPMENT } from '@/utils/constants_equipment';
 
 const EquipmentsPage = () => {
-    const [listData, setListData] = useState<Equipment[]>([]);
+    const [listData, setListData] = useState<IEquipment[]>([]);
     const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState<DataTableFilterMeta>({});
 
@@ -42,7 +42,7 @@ const EquipmentsPage = () => {
         initFilters();
     }, []);
 
-    const getPreparedData = (data: Equipment[]) => {
+    const getPreparedData = (data: IEquipment[]) => {
         return [...(data || [])].map((d) => {
             d.registerAt = new Date(d.registerAt);
             return d;
@@ -80,7 +80,7 @@ const EquipmentsPage = () => {
         });
     };
 
-    const registerAtBodyTemplate = (rowData: Equipment) => {
+    const registerAtBodyTemplate = (rowData: IEquipment) => {
         return rowData.registerAt.toLocaleDateString(LOCALE, CONFIG_LOCALE_DATE as any);
     };
 
@@ -88,7 +88,7 @@ const EquipmentsPage = () => {
         return <Calendar value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} dateFormat={FORMAT_DATE_STRING} placeholder={FORMAT_DATE_STRING} mask="99/99/9999" />;
     };
 
-    const statusBodyTemplate = (rowData: Equipment) => {
+    const statusBodyTemplate = (rowData: IEquipment) => {
         return <span className={`item-badge status-${StatusEquipmetEnum[rowData.status]}`}>{rowData.status}</span>;
     };
 
@@ -125,8 +125,8 @@ const EquipmentsPage = () => {
                         stateStorage="session" 
                         stateKey="gr-const-dt-state-request-fuel-local"
                     >
-                        <Column field="name" header="Nombre" sortable filter filterPlaceholder="Buscar por nombre" style={{ minWidth: '12rem' }} />
-                        <Column field="economicNumber" header="No. Económico" sortable filter filterPlaceholder="Buscar por no. económico" style={{ minWidth: '12rem', fontWeight: 'bold' }} />
+                        <Column field="name" header="Nombre" frozen sortable filter filterPlaceholder="Buscar por nombre" style={{ minWidth: '12rem' }} />
+                        <Column field="economicNumber" header="No. Económico" frozen sortable filter filterPlaceholder="Buscar por no. económico" style={{ minWidth: '12rem', fontWeight: 'bold' }} />
                         <Column field="status" header="Estado" align="center" body={statusBodyTemplate} sortable filter filterElement={statusFilterTemplate} style={{ minWidth: '6rem' }} />
                         <Column field="hourMeter" header="Horómetro" dataType="numeric" sortable filter filterPlaceholder="Buscar por horómetro" style={{ minWidth: '6rem' }} />
                         <Column field="odoMeter" header="Odómetro" dataType="numeric" sortable filter filterPlaceholder="Buscar por odómetro" style={{ minWidth: '6rem' }} />

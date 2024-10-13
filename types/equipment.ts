@@ -8,7 +8,7 @@ export interface IFormEquipment {
   status: StatusEquipment;
 }
 
-export interface Equipment extends IFormEquipment {
+export interface IEquipment extends IFormEquipment {
   id: string;
   registerAt: Date;
 }

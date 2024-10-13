@@ -6,7 +6,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { STATUS_EQUIPMENT } from '@/utils/constants_equipment';
 import { InputNumber } from 'primereact/inputnumber';
 import { useRouter } from 'next/navigation';
-import { IFormEquipment, StatusEquipment } from '@/types/equipment';
+import { IFormEquipment } from '@/types/equipment';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { classNames } from 'primereact/utils';
 
@@ -47,9 +47,9 @@ const FormEquipment = () => {
                             ? <small className='p-error'>{errors.name.message}</small>
                             : <small>El nombre del equipo no debe coincidir con otro ya registrado.</small>}
                     </div>
-                    <div className="p-fluid formgrid grid">
+                    <div className="p-fluid formgrid grid gap-3 md:gap-0">
                         <div className="field col-12 md:col-6">
-                            <label htmlFor="economic-number">No. Económico</label>
+                            <label htmlFor="economicNumber">No. Económico</label>
                             <Controller
                                 name="economicNumber"
                                 control={control}
@@ -77,9 +77,9 @@ const FormEquipment = () => {
                                 )} />
                         </div>
                     </div>
-                    <div className="p-fluid formgrid grid">
+                    <div className="p-fluid formgrid grid gap-3 md:gap-0">
                         <div className="field col-12 md:col-6">
-                            <label htmlFor="hour-meter">Horómetro</label>
+                            <label htmlFor="hourMeter">Horómetro</label>
                             <Controller
                                 name="hourMeter"
                                 control={control}
@@ -97,7 +97,7 @@ const FormEquipment = () => {
                                 && <small className='p-error'>{errors.hourMeter.message}</small>}
                         </div>
                         <div className="field col-12 md:col-6">
-                            <label htmlFor="hour-meter">Odómetro</label>
+                            <label htmlFor="odoMeter">Odómetro</label>
                             <Controller
                                 name="odoMeter"
                                 control={control}

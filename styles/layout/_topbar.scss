@@ -64,6 +64,11 @@
         }
     }
 
+    .layout-topbar-button-theme {
+        color: var(--primary-color-text);
+        background-color: var(--text-color-secondary);
+    }
+
     .layout-menu-button {
         margin-right: 2rem;
     }

@@ -11,13 +11,12 @@ import { useRouter } from 'next/navigation';
 import { EquipmentService } from '@/core/service/EquipmentService';
 import { StatusEquipmetEnum } from '@/core/enum/equipment.enum';
 import { CONFIG_LOCALE_DATE, FORMAT_DATE_STRING, LOCALE } from '@/utils/constants_format';
+import { STATUS_EQUIPMENT } from '@/utils/constants_equipment';
 
 const EquipmentsPage = () => {
     const [listData, setListData] = useState<Equipment[]>([]);
     const [loading, setLoading] = useState(true);
     const [filters, setFilters] = useState<DataTableFilterMeta>({});
-
-    const statuses: StatusEquipment[] = ['En servicio', 'Fuera de servicio'];
 
     const router = useRouter();
 
@@ -94,7 +93,7 @@ const EquipmentsPage = () => {
     };
 
     const statusFilterTemplate = (options: ColumnFilterElementTemplateOptions) => {
-        return <Dropdown value={options.value} options={statuses} onChange={(e) => options.filterCallback(e.value, options.index)} itemTemplate={statusItemTemplate} placeholder="Seleccione un estado" className="p-column-filter" showClear />;
+        return <Dropdown value={options.value} options={STATUS_EQUIPMENT} onChange={(e) => options.filterCallback(e.value, options.index)} itemTemplate={statusItemTemplate} placeholder="Seleccione un estado" className="p-column-filter" showClear />;
     };
 
     const statusItemTemplate = (option: StatusEquipment) => {

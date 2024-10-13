@@ -1,11 +1,14 @@
 export type StatusEquipment = 'En servicio' | 'Fuera de servicio';
 
-export interface Equipment {
-  id: string;
+export interface IFormEquipment {
   name: string;
   economicNumber: string;
   hourMeter: number;
   odoMeter: number;
-  registerAt: Date;
   status: StatusEquipment;
+}
+
+export interface Equipment extends IFormEquipment {
+  id: string;
+  registerAt: Date;
 }

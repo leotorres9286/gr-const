@@ -6,10 +6,13 @@ import React, { forwardRef, useContext, useImperativeHandle, useRef } from 'reac
 import { AppTopbarRef, LayoutConfig } from '@/types';
 import { LayoutContext } from './context/layoutcontext';
 import { PrimeReactContext } from 'primereact/api';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
     const { layoutConfig, setLayoutConfig, layoutState, onMenuToggle, showProfileSidebar } = useContext(LayoutContext);
     const { changeTheme } = useContext(PrimeReactContext);
+    const { data: session, status } = useSession();
+
     const menubuttonRef = useRef(null);
     const topbarmenuRef = useRef(null);
     const topbarmenubuttonRef = useRef(null);
@@ -54,10 +57,13 @@ const AppTopbar = forwardRef<AppTopbarRef>((props, ref) => {
                     <i className="pi pi-palette"></i>
                     <span>Cambiar tema</span>
                 </button>
-                <button type="button" className="p-link layout-topbar-button">
-                    <i className="pi pi-user"></i>
-                    <span>Profile</span>
-                </button>
+                <a>{status}</a>
+                {session && (
+                    <button type="button" className="p-link layout-topbar-button">
+                        <i className="pi pi-user"></i>
+                        <span>Profile</span>
+                    </button>
+                )}
                 <Link href="/documentation">
                     <button type="button" className="p-link layout-topbar-button">
                         <i className="pi pi-cog"></i>

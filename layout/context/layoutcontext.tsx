@@ -1,17 +1,18 @@
 'use client';
 import React, { useState, createContext } from 'react';
 import { LayoutState, ChildContainerProps, LayoutConfig, LayoutContextProps } from '@/types';
+import { useLocalStorage } from 'primereact/hooks';
 export const LayoutContext = createContext({} as LayoutContextProps);
 
 export const LayoutProvider = ({ children }: ChildContainerProps) => {
-    const [layoutConfig, setLayoutConfig] = useState<LayoutConfig>({
+    const [layoutConfig, setLayoutConfig] = useLocalStorage<LayoutConfig>({
         ripple: false,
         inputStyle: 'outlined',
         menuMode: 'static',
         colorScheme: 'light',
         theme: 'lara-light-blue',
         scale: 14
-    });
+    }, process.env.NEXT_PUBLIC_KEY_LOCAL_STORAGE_LAYOUT_CONFIG!);
 
     const [layoutState, setLayoutState] = useState<LayoutState>({
         staticMenuDesktopInactive: false,

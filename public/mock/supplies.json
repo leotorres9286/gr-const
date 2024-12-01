@@ -1,0 +1,18 @@
+{
+    "data": [
+        {
+            "id": "001",
+            "name": "Pipa 01",
+            "economicNumber": "000024",
+            "status": "En servicio",
+            "registerAt": "2024-07-13"
+        },
+        {
+            "id": "002",
+            "name": "Escabadora",
+            "economicNumber": "000025",
+            "status": "Fuera de servicio",
+            "registerAt": "2024-07-13"
+        }
+    ]
+}

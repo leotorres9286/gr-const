@@ -40,7 +40,7 @@ const RequestFuelsPage = () => {
             setListData(getPreparedData(data));
             setLoading(false);
         });
-        
+
         initFilters();
     }, []);
 
@@ -140,7 +140,7 @@ const RequestFuelsPage = () => {
                         scrollHeight="flex"
                         emptyMessage="No hay registros."
                         header={HeaderComponent}
-                        stateStorage="session" 
+                        stateStorage="session"
                         stateKey="gr-const-dt-state-request-fuel-local"
                     >
                         <Column field="equipment.name" header="Equipo" frozen sortable filter filterField="equipment.name" filterPlaceholder="Buscar por equipo" style={{ minWidth: '12rem', fontWeight: 'bold' }} />

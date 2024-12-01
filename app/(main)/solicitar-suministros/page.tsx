@@ -266,7 +266,7 @@ const RequestSuppliesPage = () => {
     const priceBodyTemplate = (rowData: Demo.Product) => {
         return formatCurrency(rowData.price as number);
     };
-    
+
     const header1 = renderHeader1();
 
     return (

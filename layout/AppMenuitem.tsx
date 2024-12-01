@@ -62,7 +62,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
             {props.root && item!.visible !== false && <div className="layout-menuitem-root-text">{item!.label}</div>}
             {(!item!.to || item!.items) && item!.visible !== false ? (
                 <a href={item!.url} onClick={(e) => itemClick(e)} className={classNames(item!.class, 'p-ripple')} target={item!.target} tabIndex={0}>
-                    {item!.typeIcon === 'fa' 
+                    {item!.typeIcon === 'fa'
                     ? <FontAwesomeIcon className='layout-menuitem-icon' icon={["fas", item!.icon as IconName]} />
                     : <i className={classNames('layout-menuitem-icon', item!.icon)}></i>}
                     <span className="layout-menuitem-text">{item!.label}</span>
@@ -73,7 +73,7 @@ const AppMenuitem = (props: AppMenuItemProps) => {
 
             {item!.to && !item!.items && item!.visible !== false ? (
                 <Link href={item!.to} replace={item!.replaceUrl} target={item!.target} onClick={(e) => itemClick(e)} className={classNames(item!.class, 'p-ripple', { 'active-route': isActiveRoute })} tabIndex={0}>
-                    {item!.typeIcon === 'fa' 
+                    {item!.typeIcon === 'fa'
                     ? <FontAwesomeIcon className='layout-menuitem-icon' icon={["fas", item!.icon as IconName]} />
                     : <i className={classNames('layout-menuitem-icon', item!.icon)}></i>}
                     <span className="layout-menuitem-text">{item!.label}</span>

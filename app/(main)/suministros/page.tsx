@@ -1,50 +1,26 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { CustomerService } from '../../../demo/service/CustomerService';
-import { ProductService } from '../../../demo/service/ProductService';
 import { FilterMatchMode, FilterOperator } from 'primereact/api';
 import { Button } from 'primereact/button';
 import { Calendar } from 'primereact/calendar';
-import { Column, ColumnFilterApplyTemplateOptions, ColumnFilterClearTemplateOptions, ColumnFilterElementTemplateOptions } from 'primereact/column';
-import { DataTable, DataTableExpandedRows, DataTableFilterMeta } from 'primereact/datatable';
+import { Column, ColumnFilterElementTemplateOptions } from 'primereact/column';
+import { DataTable, DataTableFilterMeta } from 'primereact/datatable';
 import { Dropdown } from 'primereact/dropdown';
-import { InputNumber } from 'primereact/inputnumber';
-import { InputText } from 'primereact/inputtext';
-import { MultiSelect } from 'primereact/multiselect';
-import { ProgressBar } from 'primereact/progressbar';
-import { Rating } from 'primereact/rating';
-import { Slider } from 'primereact/slider';
-import { ToggleButton } from 'primereact/togglebutton';
-import { TriStateCheckbox } from 'primereact/tristatecheckbox';
-import type { Demo } from '@/types';
-import { classNames } from 'primereact/utils';
-import styles from './index.module.scss';
-import { PriorityRequestSuplies } from '@/types/request-supplies';
-import { IPriorityRequestSupplies } from '@/core/enum/request-supplies';
-import { useRouter } from 'next/router';
-import { ISupplie } from '@/types/supplies';
-import { EquipmentService } from '@/core/service/EquipmentService';
+import { ISupplie, StatusSupplie } from '@/types/supplies';
 import { SupplieService } from '@/core/service/SupplieService';
+import { CONFIG_LOCALE_DATE, FORMAT_DATE_STRING, LOCALE } from '@/utils/constants_format';
+import { SupplieStatusEnum } from '@/core/enum/supplies.enum';
+import { useRouter } from 'next/navigation';
+import { STATUS_SUPPLIE } from '@/utils/constants_supplie';
 
 const SuppliesPage = () => {
     const [listData, setListData] = useState<ISupplie[]>([]);
     const [filters, setFilters] = useState<DataTableFilterMeta>({});
-    const [globalFilterValue, setGlobalFilterValue] = useState('');
     const [loading, setLoading] = useState(true);
-
-    const statusRequestSupplies: PriorityRequestSuplies[] = ['Baja', 'Media', 'Alta'];
+    const router = useRouter();
 
     const clearFilter1 = () => {
         initfilters();
-    };
-
-    const onGlobalFilterChange1 = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-        let _filters = { ...filters };
-        (_filters['global'] as any).value = value;
-
-        setFilters(_filters);
-        setGlobalFilterValue(value);
     };
 
     const HeaderComponent = () => {
@@ -53,7 +29,7 @@ const SuppliesPage = () => {
                 <Button type="button" icon="pi pi-filter-slash" label="Quitar Filtros" outlined onClick={clearFilter1} />
                 <span className="p-input-icon-left ">
                     <i className="pi pi-search" />
-                    <Button type="button" icon="pi pi-plus" label="Nuevo Suministro" />
+                    <Button type="button" icon="pi pi-plus" label="Nuevo Suministro" onClick={() => router.push('/suministros/nuevo')} />
                 </span>
             </div>
         );
@@ -72,21 +48,6 @@ const SuppliesPage = () => {
         return [...(data || [])].map((d) => {
             d.registerAt = new Date(d.registerAt);
             return d;
-        });
-    };
-
-    const formatDate = (value: Date) => {
-        return value.toLocaleDateString('en-US', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-    };
-
-    const formatCurrency = (value: number) => {
-        return value.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
         });
     };
 
@@ -111,111 +72,24 @@ const SuppliesPage = () => {
         });
     };
 
-    const filterClearTemplate = (options: ColumnFilterClearTemplateOptions) => {
-        return <Button type="button" icon="pi pi-times" onClick={options.filterClearCallback} severity="secondary"></Button>;
+    const statusBodyTemplate = (rowData: ISupplie) => {
+        return <span className={`customer-badge status-${SupplieStatusEnum[rowData.status]}`}>{rowData.status}</span>;
     };
 
-    const filterApplyTemplate = (options: ColumnFilterApplyTemplateOptions) => {
-        return <Button type="button" icon="pi pi-check" onClick={options.filterApplyCallback} severity="success"></Button>;
+    const statusFilterTemplate = (options: ColumnFilterElementTemplateOptions) => {
+        return <Dropdown value={options.value} options={STATUS_SUPPLIE} onChange={(e) => options.filterCallback(e.value, options.index)} itemTemplate={statusItemTemplate} placeholder="Seleccione un estado" className="p-column-filter" showClear />;
     };
 
-
-    const representativesItemTemplate = (option: any) => {
-        return (
-            <div className="p-multiselect-representative-option">
-                <img alt={option.name} src={`/demo/images/avatar/${option.image}`} width={32} style={{ verticalAlign: 'middle' }} />
-                <span style={{ marginLeft: '.5em', verticalAlign: 'middle' }}>{option.name}</span>
-            </div>
-        );
+    const statusItemTemplate = (option: StatusSupplie) => {
+        return <span className={`item-badge status-${SupplieStatusEnum[option]}`}>{option}</span>;
     };
 
-    const dateBodyTemplate = (rowData: ISupplie) => {
-        return formatDate(rowData.registerAt);
+    const registerAtBodyTemplate = (rowData: ISupplie) => {
+        return rowData.registerAt.toLocaleDateString(LOCALE, CONFIG_LOCALE_DATE as any);
     };
 
-    const dateFilterTemplate = (options: ColumnFilterElementTemplateOptions) => {
-        return <Calendar value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} dateFormat="mm/dd/yy" placeholder="mm/dd/yyyy" mask="99/99/9999" />;
-    };
-
-    const balanceBodyTemplate = (rowData: Demo.Customer) => {
-        return formatCurrency(rowData.balance as number);
-    };
-
-    const balanceFilterTemplate = (options: ColumnFilterElementTemplateOptions) => {
-        return <InputNumber value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} mode="currency" currency="USD" locale="en-US" />;
-    };
-
-    const statusBodyTemplate = (rowData: Demo.Customer) => {
-        return <span className={`customer-badge status-${rowData.status}`}>{rowData.status}</span>;
-    };
-
-    const requestStatusTemplate = (options: ColumnFilterElementTemplateOptions) => {
-        return (
-            <Dropdown
-                value={options.value}
-                options={statusRequestSupplies}
-                onChange={(e) => options.filterCallback(e.value, options.index)}
-                itemTemplate={requestStatusItemTemplate}
-                placeholder="Seleccione un nivel"
-                className="p-column-filter"
-                showClear
-            />
-        );
-    };
-
-    const requestStatusItemTemplate = (option: PriorityRequestSuplies) => {
-        return <span className={`item-badge tank-level-${IPriorityRequestSupplies[option]}`}>{option}</span>;
-    };
-
-    const statusItemTemplate = (option: any) => {
-        return <span className={`customer-badge status-${option}`}>{option}</span>;
-    };
-
-    const activityBodyTemplate = (rowData: Demo.Customer) => {
-        return <ProgressBar value={rowData.activity} showValue={false} style={{ height: '.5rem' }}></ProgressBar>;
-    };
-
-    const verifiedBodyTemplate = (rowData: Demo.Customer) => {
-        return (
-            <i
-                className={classNames('pi', {
-                    'text-green-500 pi-check-circle': rowData.verified,
-                    'text-pink-500 pi-times-circle': !rowData.verified
-                })}
-            ></i>
-        );
-    };
-
-    const verifiedFilterTemplate = (options: ColumnFilterElementTemplateOptions) => {
-        return <TriStateCheckbox value={options.value} onChange={(e) => options.filterCallback(e.value)} />;
-    };
-
-    const amountBodyTemplate = (rowData: Demo.Customer) => {
-        return formatCurrency(rowData.amount as number);
-    };
-
-    const statusOrderBodyTemplate = (rowData: Demo.Customer) => {
-        return <span className={`order-badge order-${rowData.status?.toLowerCase()}`}>{rowData.status}</span>;
-    };
-
-    const searchBodyTemplate = () => {
-        return <Button icon="pi pi-search" />;
-    };
-
-    const imageBodyTemplate = (rowData: Demo.Product) => {
-        return <img src={`/demo/images/product/${rowData.image}`} onError={(e) => ((e.target as HTMLImageElement).src = 'https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png')} alt={rowData.image} className="shadow-2" width={100} />;
-    };
-
-    const priceBodyTemplate = (rowData: Demo.Product) => {
-        return formatCurrency(rowData.price as number);
-    };
-
-    const ratingBodyTemplate = (rowData: Demo.Product) => {
-        return <Rating value={rowData.rating} readOnly cancel={false} />;
-    };
-
-    const statusBodyTemplate2 = (rowData: Demo.Product) => {
-        return <span className={`product-badge status-${rowData.inventoryStatus?.toLowerCase()}`}>{rowData.inventoryStatus}</span>;
+    const registerAtFilterTemplate = (options: ColumnFilterElementTemplateOptions) => {
+        return <Calendar value={options.value} onChange={(e) => options.filterCallback(e.value, options.index)} dateFormat={FORMAT_DATE_STRING} placeholder={FORMAT_DATE_STRING} mask="99/99/9999" />;
     };
 
     const header1 = HeaderComponent();
@@ -232,19 +106,22 @@ const SuppliesPage = () => {
                         showGridlines
                         rows={10}
                         dataKey="id"
+                        sortMode="multiple"
+                        removableSort
                         filters={filters}
                         filterDisplay="menu"
                         loading={loading}
                         responsiveLayout="scroll"
                         scrollable
                         scrollHeight="flex"
-                        emptyMessage="No customers found."
-                        header={header1}
+                        emptyMessage="No hay registros."
+                        header={HeaderComponent}
+                        stateStorage="session"
                     >
                         <Column field="name" header="Nombre" filter filterPlaceholder="Filtrar por Nombre" sortable style={{ minWidth: '12rem' }} />
-                        <Column field="economicNumber" header="No. Económico" frozen sortable filter filterPlaceholder="Buscar por no. económico" style={{ minWidth: '12rem', fontWeight: 'bold' }} />
-                        <Column field="status" header="Estado" filterMenuStyle={{ width: '14rem' }} sortable style={{ minWidth: '12rem' }} body={statusBodyTemplate} filter filterElement={requestStatusTemplate} />
-                        <Column header="Fecha de Registro" filterField="date" dataType="date" sortable style={{ minWidth: '10rem' }} body={dateBodyTemplate} filter filterElement={dateFilterTemplate} />
+                        <Column field="economicNumber" dataType="numeric" header="No. Económico" frozen sortable filter filterPlaceholder="Buscar por No. Económico" style={{ minWidth: '12rem', fontWeight: 'bold' }} />
+                        <Column field="status" header="Estado" align="center" body={statusBodyTemplate} sortable filter filterElement={statusFilterTemplate} style={{ minWidth: '6rem' }} />
+                        <Column field="registerAt" header="Fecha de Registro" align="center" body={registerAtBodyTemplate} dataType="date" sortable filter filterElement={registerAtFilterTemplate} style={{ minWidth: '10rem' }} />
                     </DataTable>
                 </div>
             </div>

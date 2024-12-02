@@ -1,11 +1,11 @@
 export type StatusSupplie = 'Disponible' | 'No Disponible';
 
-export interface ISupplie extends IFormEquipment{
-    id: string,
-    registerAt: Date
+export interface ISupplie extends IFormSupplie{
+    id: string;
+    registerAt: Date;
 }
 
-export interface IFormEquipment {
+export interface IFormSupplie {
     name: string;
     economicNumber: string;
     status: StatusSupplie;

@@ -69,7 +69,7 @@ export const FormRquestSuppliesPage = () => {
                         {errors.supplie && <small className="p-error">{errors.supplie.message}</small>}
                     </div>
                     <div className="field">
-                        <label htmlFor="countSupplie">Cantidad de combustible *</label>
+                        <label htmlFor="countSupplie">Cantidad de Unidades *</label>
                         <Controller
                             name="countSupplie"
                             control={control}

@@ -154,7 +154,7 @@ const RequestFuelsPage = () => {
                         stateStorage="session"
                         stateKey="gr-const-dt-state-request-fuel-local"
                     >
-                        <Column field="supplie.name" header="Suministro" frozen sortable filter filterField="name" filterPlaceholder="Buscar por suministro" style={{ minWidth: '12rem', fontWeight: 'bold' }} />
+                        <Column field="supplie.name" header="Suministro" frozen sortable filter filterField="supplie.name" filterPlaceholder="Buscar por suministro" style={{ minWidth: '12rem', fontWeight: 'bold' }} />
                         <Column field="countSupplie" header="Cantidad de Unidades" dataType="numeric" sortable filter filterPlaceholder="Buscar por cantidad de suministro" style={{ minWidth: '6rem' }} />
                         <Column field="priority" header="Prioridad" align="center" body={priorityBodyTemplate} sortable filter filterElement={priorityFilterTemplate} style={{ minWidth: '6rem' }} />
                         <Column field="requestAt" header="Fecha de la Solicitud" align="center" body={requestAtBodyTemplate} dataType="date" sortable filter filterElement={requestAtFilterTemplate} style={{ minWidth: '10rem' }} />

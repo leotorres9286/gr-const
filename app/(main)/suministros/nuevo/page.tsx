@@ -1,6 +1,5 @@
 'use client';
 import { IFormSupplie } from "@/types/supplies";
-import { STATUS_EQUIPMENT } from "@/utils/constants_equipment";
 import { STATUS_SUPPLIE } from "@/utils/constants_supplie";
 import { useRouter } from "next/navigation";
 import { Button } from "primereact/button";
@@ -9,7 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { classNames } from "primereact/utils";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
-export const FormSupplies = () => {
+export const FormSuppliesPage = () => {
     const {
         control,
         formState: { errors },
@@ -32,7 +31,7 @@ export const FormSupplies = () => {
         <div className="grid">
             <div className="col-12 md:col-6 md:col-offset-3">
                 <form className="card p-fluid flex flex-column gap-3" onSubmit={handleSubmit(onSubmit)}>
-                    <h5>Nuevo Equipo</h5>
+                    <h5>Nuevo Suministro</h5>
                     <div className="field">
                         <label htmlFor="name">Nombre</label>
                         <Controller
@@ -41,7 +40,7 @@ export const FormSupplies = () => {
                             rules={{ required: 'El nombre es obligatorio.' }}
                             render={({ field, fieldState }) => <InputText id={field.name} {...field} className={classNames({ 'p-invalid': fieldState.invalid })} />}
                         />
-                        {errors.name ? <small className="p-error">{errors.name.message}</small> : <small>El nombre del equipo no debe coincidir con otro ya registrado.</small>}
+                        {errors.name ? <small className="p-error">{errors.name.message}</small> : <small>El nombre del suministro no debe coincidir con otro ya registrado.</small>}
                     </div>
                     <div className="p-fluid formgrid grid gap-3 md:gap-0">
                         <div className="field col-12 md:col-6">
@@ -71,4 +70,4 @@ export const FormSupplies = () => {
     );
 }
 
-export default FormSupplies;
+export default FormSuppliesPage;

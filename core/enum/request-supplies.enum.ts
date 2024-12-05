@@ -1,7 +1,7 @@
-export enum IPriorityRequestSupplies{
+export enum IPriorityRequestSupplies {
     'Baja' = 'low',
-    'Media' = 'medium',
-    'Alta' = 'high',
+    'Media' = 'middle',
+    'Alta' = 'full'
 }
 
 export enum StatusRequestSuppliesEnum {

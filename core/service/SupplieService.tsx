@@ -1,3 +1,4 @@
+import { IRequestSupplies } from "@/types/request-supplies";
 import { ISupplie } from "@/types/supplies";
 
 

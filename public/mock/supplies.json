@@ -1,0 +1,18 @@
+{
+    "data": [
+        {
+            "id": "001",
+            "name": "Cemento",
+            "economicNumber": "000024",
+            "status": "Disponible",
+            "registerAt": "2024-07-13"
+        },
+        {
+            "id": "002",
+            "name": "Arena",
+            "economicNumber": "000025",
+            "status": "Disponible",
+            "registerAt": "2024-07-13"
+        }
+    ]
+}

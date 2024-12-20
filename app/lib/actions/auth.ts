@@ -19,7 +19,9 @@ export async function authenticate(formData: FormData) {
     if (username || username !== null) {
       try {
         const user = await strapiClient(`/user-apps?filters[username][$eq]=${username.toString()}&populate=role`);
-        console.log(user, user.data[0].role);
+
+        // if (!user.ok) 
+        // console.log(user, user.data[0].role);
         
     
         
